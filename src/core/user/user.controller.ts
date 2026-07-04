@@ -1,6 +1,5 @@
-import { Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Inject, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUser } from './dtos/create-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -9,16 +8,7 @@ export class UserController {
     private userService: UserService,
   ) {}
 
-  @Post()
-  async create(user: CreateUser) {
-    const data = await this.userService.create(user);
-    return {
-      data,
-      message: 'User created successfully',
-    };
-  }
-
-  @Get('/:email')
+  @Get('/by-email/:email')
   async getByEmail(@Param('email') email: string) {
     const data = await this.userService.findByEmail(email);
     return {
@@ -27,12 +17,21 @@ export class UserController {
     };
   }
 
-  @Get('/:username')
+  @Get('/by-username/:username')
   async getByUsername(@Param('username') username: string) {
     const data = await this.userService.findByUsername(username);
     return {
       data,
       message: 'User with usrname fectched',
+    };
+  }
+
+  @Get('/:id')
+  async findOne(@Param('id') id: string) {
+    const data = await this.userService.findOne(id);
+    return {
+      data,
+      message: 'User data fetched',
     };
   }
 

@@ -1,9 +1,9 @@
 import {
   Column,
+  CreateDateColumn,
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -22,7 +22,7 @@ export class User {
   lastName: string;
 
   @DeleteDateColumn()
-  deletedAt?: string;
+  deletedAt?: Date;
 
   @Column({ unique: true })
   email: string;

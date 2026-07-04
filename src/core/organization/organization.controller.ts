@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { OrganizationService } from './organization.service';
 import { CreateOrganization } from './dtos/create-organization.dto';
 
@@ -10,7 +18,7 @@ export class OrganizationController {
   ) {}
 
   @Post('/organizations')
-  async create(org: CreateOrganization) {
+  async create(@Body() org: CreateOrganization) {
     const data = await this.organizationService.create(org);
     return {
       data,

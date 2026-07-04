@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OrganizationModule } from './core/organization/organization.module';
 import { UserModule } from './core/user/user.module';
+import { AuthModule } from './core/auth/auth.module';
+import { MembershipModule } from './core/membership/membership.module';
 
 // Setup proper migrations stuff later
 @Module({
@@ -28,7 +30,9 @@ import { UserModule } from './core/user/user.module';
       }),
     }),
     UserModule,
+    AuthModule,
     OrganizationModule,
+    MembershipModule,
   ],
   controllers: [AppController],
   providers: [AppService],

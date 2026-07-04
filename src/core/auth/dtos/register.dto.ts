@@ -1,6 +1,10 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateUser {
+export class RegisterUser {
+  @IsNotEmpty()
+  @IsString()
+  organizationName: string;
+
   @IsNotEmpty()
   @IsString()
   username: string;
