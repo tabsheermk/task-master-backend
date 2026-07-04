@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-enum Role {
+export enum Role {
   OWNER = 'owner',
   MEMBER = 'member',
 }

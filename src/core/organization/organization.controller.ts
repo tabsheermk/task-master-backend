@@ -6,10 +6,13 @@ import {
   Inject,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { OrganizationService } from './organization.service';
 import { CreateOrganization } from './dtos/create-organization.dto';
+import { JwtAuthGuard } from 'src/common/guards/auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller()
 export class OrganizationController {
   constructor(
