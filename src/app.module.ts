@@ -7,6 +7,7 @@ import { OrganizationModule } from './core/organization/organization.module';
 import { UserModule } from './core/user/user.module';
 import { AuthModule } from './core/auth/auth.module';
 import { MembershipModule } from './core/membership/membership.module';
+import { LoggerModule } from 'nestjs-pino';
 
 // Setup proper migrations stuff later
 @Module({
@@ -27,6 +28,24 @@ import { MembershipModule } from './core/membership/membership.module';
         ssl: true,
         synchronize: config.get<string>('ENV') === 'development',
         autoLoadEntities: true,
+      }),
+    }),
+    LoggerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        pinoHttp: {
+          transport:
+            config.get<string>('ENV') !== 'production'
+              ? {
+                  target: 'pino-pretty',
+                  options: {
+                    colorize: true,
+                    singleLine: true,
+                  },
+                }
+              : undefined,
+          redact: ['req.headers.authorization'],
+        },
       }),
     }),
     UserModule,
