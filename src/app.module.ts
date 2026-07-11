@@ -8,6 +8,8 @@ import { UserModule } from './core/user/user.module';
 import { AuthModule } from './core/auth/auth.module';
 import { MembershipModule } from './core/membership/membership.module';
 import { LoggerModule } from 'nestjs-pino';
+import { ProjectModule } from './modules/project/project.module';
+import { Request, Response } from 'express';
 
 // Setup proper migrations stuff later
 @Module({
@@ -34,6 +36,21 @@ import { LoggerModule } from 'nestjs-pino';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         pinoHttp: {
+          serializers: {
+            req(req: Request) {
+              return {
+                id: req.id,
+                method: req.method,
+                url: req.url,
+              };
+            },
+            res(res: Response) {
+              return {
+                statusCode: res.statusCode,
+              };
+            },
+          },
+
           transport:
             config.get<string>('ENV') !== 'production'
               ? {
@@ -52,6 +69,7 @@ import { LoggerModule } from 'nestjs-pino';
     AuthModule,
     OrganizationModule,
     MembershipModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
