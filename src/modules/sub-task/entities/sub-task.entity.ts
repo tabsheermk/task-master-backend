@@ -27,6 +27,9 @@ export class SubTask {
   })
   status: TaskStatus;
 
+  @Column()
+  description: string;
+
   @Column('uuid', { nullable: true })
   assigneeId?: string;
 

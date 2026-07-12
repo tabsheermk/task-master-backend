@@ -63,10 +63,10 @@ export class Task {
   reporterId: string;
 
   @Column()
-  startDate: Date;
+  startDate?: Date;
 
   @Column()
-  dueDate: Date;
+  dueDate?: Date;
 
   @CreateDateColumn()
   createdAt: Date;

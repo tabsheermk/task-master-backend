@@ -10,6 +10,10 @@ import { MembershipModule } from './core/membership/membership.module';
 import { LoggerModule } from 'nestjs-pino';
 import { ProjectModule } from './modules/project/project.module';
 import { Request, Response } from 'express';
+import { EpicModule } from './modules/epic/epic.module';
+import { TaskModule } from './modules/task/task.module';
+import { SubTaskModule } from './modules/sub-task/sub-task.module';
+import { CommentModule } from './modules/comment/comment.module';
 
 // Setup proper migrations stuff later
 @Module({
@@ -70,6 +74,10 @@ import { Request, Response } from 'express';
     OrganizationModule,
     MembershipModule,
     ProjectModule,
+    EpicModule,
+    TaskModule,
+    SubTaskModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

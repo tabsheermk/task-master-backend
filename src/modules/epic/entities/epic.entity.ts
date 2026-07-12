@@ -18,7 +18,7 @@ export class Epic {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   projectId: string;
 
   @Column()

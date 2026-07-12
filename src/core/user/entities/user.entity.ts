@@ -28,7 +28,7 @@ export class User {
   email: string;
 
   @Column({ default: false })
-  isEmailVerified: string;
+  isEmailVerified: boolean;
 
   @Column()
   password: string;
