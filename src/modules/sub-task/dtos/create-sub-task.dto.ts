@@ -9,10 +9,6 @@ export class CreateSubTask {
   @IsString()
   description: string;
 
-  @IsNotEmpty()
-  @IsString()
-  taskId: string;
-
   @IsOptional()
   @IsString()
   assigneeId: string;

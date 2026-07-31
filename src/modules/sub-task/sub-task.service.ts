@@ -16,22 +16,23 @@ export class SubTaskService {
     this.logger.setContext(SubTaskService.name);
   }
 
-  async create(data: CreateSubTask): Promise<SubTask> {
+  async create(data: CreateSubTask, taskId: string): Promise<SubTask> {
     this.logger.info('Creating a sub task');
     const subTask = this.subTaskRepository.create({
       ...data,
+      taskId: taskId,
       status: TaskStatus.TODO,
     });
     return await this.subTaskRepository.save(subTask);
   }
 
-  async update(id: string, data: UpdateSubTask): Promise<SubTask> {
+  async update(id: string, data: UpdateSubTask, taskId: string): Promise<SubTask> {
     this.logger.info({ subTaskId: id }, 'Updating a task');
 
-    const subTask = await this.subTaskRepository.findOneBy({ id });
+    const subTask = await this.subTaskRepository.findOne({ where: { id, taskId } });
 
     if (!subTask) {
-      this.logger.warn({ subTaskId: id }, 'Subtask not found');
+      this.logger.warn({ subTaskId: id, taskId }, 'Subtask not found');
       throw new NotFoundException('Subtask not found');
     }
 
@@ -44,15 +45,15 @@ export class SubTaskService {
     return updatedSubTask;
   }
 
-  async find(): Promise<SubTask[]> {
-    this.logger.info('fetch all SubTasks');
-    const subTasks = await this.subTaskRepository.find();
+  async find(taskId: string): Promise<SubTask[]> {
+    this.logger.info({ taskId }, 'fetch all SubTasks');
+    const subTasks = await this.subTaskRepository.find({ where: { taskId } });
     return subTasks;
   }
 
-  async findOne(id: string): Promise<SubTask> {
+  async findOne(id: string, taskId: string): Promise<SubTask> {
     this.logger.info({ subTaskId: id }, 'Fetching a subtask');
-    const subTask = await this.subTaskRepository.findOneBy({ id });
+    const subTask = await this.subTaskRepository.findOne({ where: { id, taskId } });
 
     if (!subTask) {
       this.logger.info({ subTaskId: id }, 'SubTask not found');

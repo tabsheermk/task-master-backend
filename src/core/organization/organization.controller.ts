@@ -48,7 +48,7 @@ export class OrganizationController {
     };
   }
 
-  @Delete('/organizations')
+  @Delete('/organizations/:id')
   async delete(@Param('id') id: string) {
     return this.organizationService.remove(id);
   }

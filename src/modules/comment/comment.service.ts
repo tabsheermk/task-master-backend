@@ -32,6 +32,8 @@ export class CommentService {
 
     Object.assign(comment, data);
 
+    await this.commentRepository.save(comment);
+
     this.logger.info({ commentId: id }, 'Comment updated');
 
     return comment;

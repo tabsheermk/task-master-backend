@@ -25,9 +25,9 @@ export class SubTaskController {
   }
 
   @Post()
-  async create(@Body() data: CreateSubTask) {
+  async create(@Param('taskId') taskId: string, @Body() data: CreateSubTask) {
     this.logger.info('Creating a subtask');
-    const res = await this.subTaskService.create(data);
+    const res = await this.subTaskService.create(data, taskId);
     return {
       data: res,
       message: 'SubTask created successfully',
@@ -35,9 +35,9 @@ export class SubTaskController {
   }
 
   @Put('/:id')
-  async update(@Param('id') id: string, @Body() data: UpdateSubTask) {
+  async update(@Param('taskId') taskId: string, @Param('id') id: string, @Body() data: UpdateSubTask) {
     this.logger.info('Updating a SubTask');
-    const res = await this.subTaskService.update(id, data);
+    const res = await this.subTaskService.update(id, data, taskId);
     return {
       data: res,
       message: 'SubTask updated successfully',
@@ -45,9 +45,9 @@ export class SubTaskController {
   }
 
   @Get()
-  async find() {
+  async find(@Param('taskId') taskId: string) {
     this.logger.info('Fetching all subtasks');
-    const res = await this.subTaskService.find();
+    const res = await this.subTaskService.find(taskId);
     return {
       data: res,
       count: res.length,
@@ -56,9 +56,9 @@ export class SubTaskController {
   }
 
   @Get('/:id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('taskId') taskId: string, @Param('id') id: string) {
     this.logger.info('Fetching a subtask');
-    const res = await this.subTaskService.findOne(id);
+    const res = await this.subTaskService.findOne(id, taskId);
     return {
       data: res,
       message: 'Subtask fetched succesffully',

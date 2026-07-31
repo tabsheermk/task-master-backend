@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { Repository } from 'typeorm';
@@ -25,6 +25,7 @@ export class ProjectService {
 
     if (existingProject) {
       this.logger.warn('Project with name already exists', existingProject);
+      throw new ConflictException('Project with name already exists');
     }
 
     const project = this.projectRepository.create({
