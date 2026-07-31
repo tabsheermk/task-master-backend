@@ -11,6 +11,8 @@ import { MembershipService } from './membership.service';
 import { JwtAuthGuard } from 'src/common/guards/auth/jwt-auth.guard';
 import { PinoLogger } from 'nestjs-pino';
 import { Membership } from './entities/membership.entity';
+import { CurrentUser } from 'src/common/decorators/current-user';
+import { User } from '../user/entities/user.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('memberships')
@@ -41,6 +43,16 @@ export class MembershipController {
       data: res,
       count: res.length,
       message: 'Memberships fetched successfully',
+    };
+  }
+
+  @Get('/me')
+  async getMyMemberships(@CurrentUser() user: User) {
+    this.logger.info('Inside get my memberships method');
+    const res = await this.membershipService.findMyOrgs(user.id);
+    return {
+      data: res,
+      message: 'My memberships fetched successfully',
     };
   }
 

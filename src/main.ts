@@ -32,6 +32,11 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters();
+  app.enableCors({
+    origin: configService.getOrThrow<string>('FRONTEND_URL'),
+    credentials: true,
+  });
+
   await app.listen(configService.get<number>('PORT') ?? 3000);
 }
 bootstrap();

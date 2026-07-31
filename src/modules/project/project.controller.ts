@@ -66,4 +66,14 @@ export class ProjectController {
       message: 'Project fetched successfully',
     };
   }
+
+  @Get('/organization/:orgId')
+  async getProjectsByOrganization(@Param('orgId') orgId: string) {
+    this.logger.info('Inside get projects by organization');
+    const res = await this.projectService.findProjectsOfAnOrganization(orgId);
+    return {
+      data: res,
+      message: 'Projects of an organization fetched successfully',
+    };
+  }
 }

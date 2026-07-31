@@ -26,10 +26,16 @@ export class SubTaskService {
     return await this.subTaskRepository.save(subTask);
   }
 
-  async update(id: string, data: UpdateSubTask, taskId: string): Promise<SubTask> {
+  async update(
+    id: string,
+    data: UpdateSubTask,
+    taskId: string,
+  ): Promise<SubTask> {
     this.logger.info({ subTaskId: id }, 'Updating a task');
 
-    const subTask = await this.subTaskRepository.findOne({ where: { id, taskId } });
+    const subTask = await this.subTaskRepository.findOne({
+      where: { id, taskId },
+    });
 
     if (!subTask) {
       this.logger.warn({ subTaskId: id, taskId }, 'Subtask not found');
@@ -53,7 +59,9 @@ export class SubTaskService {
 
   async findOne(id: string, taskId: string): Promise<SubTask> {
     this.logger.info({ subTaskId: id }, 'Fetching a subtask');
-    const subTask = await this.subTaskRepository.findOne({ where: { id, taskId } });
+    const subTask = await this.subTaskRepository.findOne({
+      where: { id, taskId },
+    });
 
     if (!subTask) {
       this.logger.info({ subTaskId: id }, 'SubTask not found');

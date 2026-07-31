@@ -1,11 +1,15 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Project } from './entities/project.entity';
-import { Repository } from 'typeorm';
 import { PinoLogger } from 'nestjs-pino';
+import { User } from 'src/core/user/entities/user.entity';
+import { Repository } from 'typeorm';
 import { CreateProject } from './dtos/create-project.dto';
 import { UpdateProject } from './dtos/update-project.dto';
-import { User } from 'src/core/user/entities/user.entity';
+import { Project } from './entities/project.entity';
 
 @Injectable()
 export class ProjectService {
@@ -85,5 +89,18 @@ export class ProjectService {
 
     this.logger.info({ projectKey: key }, 'Project fetched successfully');
     return project;
+  }
+
+  async findProjectsOfAnOrganization(orgId: string): Promise<Project[]> {
+    this.logger.info(
+      { organizationId: orgId },
+      'Fetch projects of an organization',
+    );
+
+    const projects = await this.projectRepository.findBy({
+      organizationId: orgId,
+    });
+
+    return projects;
   }
 }

@@ -56,4 +56,10 @@ export class CommentService {
 
     return comment;
   }
+
+  async findCommentsOnATask(taskId: string): Promise<Comment[]> {
+    this.logger.info({ taskId }, 'Fetching comments of a task');
+    const comments = await this.commentRepository.findBy({ taskId });
+    return comments;
+  }
 }

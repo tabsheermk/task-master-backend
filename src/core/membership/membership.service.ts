@@ -10,7 +10,9 @@ export class MembershipService {
     @InjectRepository(Membership)
     private membershipRepository: Repository<Membership>,
     private readonly logger: PinoLogger,
-  ) {}
+  ) {
+    logger.setContext(MembershipService.name);
+  }
 
   async create(data: Membership) {
     const membership = this.membershipRepository.create(data);
@@ -24,5 +26,11 @@ export class MembershipService {
   async findOne(id: string) {
     const membership = await this.membershipRepository.findOneBy({ id });
     return membership;
+  }
+
+  async findMyOrgs(userId: string) {
+    this.logger.info({ userId }, 'Fetching organizations of a user');
+    const memberships = await this.membershipRepository.findBy({ userId });
+    return memberships;
   }
 }

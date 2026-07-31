@@ -62,4 +62,10 @@ export class TaskService {
 
     return task;
   }
+
+  async findTasksOfAProject(projectId: string): Promise<Task[]> {
+    this.logger.info({ projectId }, 'Fetching tasks of a project');
+    const tasks = await this.taskRepository.findBy({ projectId });
+    return tasks;
+  }
 }

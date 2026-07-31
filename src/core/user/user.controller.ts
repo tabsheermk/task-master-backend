@@ -8,6 +8,8 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/common/guards/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/common/decorators/current-user';
+import { User } from './entities/user.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
@@ -32,6 +34,15 @@ export class UserController {
     return {
       data,
       message: 'User with usrname fectched',
+    };
+  }
+
+  @Get('/me')
+  async getProfile(@CurrentUser() user: User) {
+    const data = await this.userService.findOne(user.id);
+    return {
+      data,
+      message: 'Profile fetched successfully',
     };
   }
 

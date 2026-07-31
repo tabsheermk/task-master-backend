@@ -66,4 +66,14 @@ export class TaskController {
       message: 'Task fetched successfully',
     };
   }
+
+  @Get('/project/:projectId')
+  async getTasksOfAProject(@Param('projectId') projectId: string) {
+    this.logger.info('Fetching tasks of a project');
+    const res = await this.taskService.findTasksOfAProject(projectId);
+    return {
+      data: res,
+      message: 'Tasks of a project fetched successfully',
+    };
+  }
 }

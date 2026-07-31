@@ -48,11 +48,12 @@ export class AuthService {
       throw new BadRequestException('User with this email already exists');
     }
 
-    const existingOrg = await this.dataSource.getRepository(Organization).findOneBy({ name: data.organizationName });
+    const existingOrg = await this.dataSource
+      .getRepository(Organization)
+      .findOneBy({ name: data.organizationName });
     if (existingOrg) {
       throw new ConflictException('Organization name already in use');
     }
-
 
     const queryRunner = this.dataSource.createQueryRunner();
 

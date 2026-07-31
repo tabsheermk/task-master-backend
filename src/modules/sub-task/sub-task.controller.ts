@@ -35,7 +35,11 @@ export class SubTaskController {
   }
 
   @Put('/:id')
-  async update(@Param('taskId') taskId: string, @Param('id') id: string, @Body() data: UpdateSubTask) {
+  async update(
+    @Param('taskId') taskId: string,
+    @Param('id') id: string,
+    @Body() data: UpdateSubTask,
+  ) {
     this.logger.info('Updating a SubTask');
     const res = await this.subTaskService.update(id, data, taskId);
     return {

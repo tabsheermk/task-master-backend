@@ -65,4 +65,14 @@ export class CommentController {
       message: 'Comment fetched successfully',
     };
   }
+
+  @Get('/task/:taskId')
+  async getCommentsOnATask(@Param('taskId') taskId: string) {
+    this.logger.info('Fetching comments of a task');
+    const res = await this.commentService.findCommentsOnATask(taskId);
+    return {
+      data: res,
+      message: 'Comments of a task fetched successfully',
+    };
+  }
 }
